@@ -1,6 +1,6 @@
 # Routhr Cli
 
-##  Routhr is a command line tool for creating and managing [Routhr](https://routhr.com) projects.
+##  Routhr Cli is a command line tool for creating and managing [Routhr](https://routhr.com) projects.
 
 ## Installation
 
