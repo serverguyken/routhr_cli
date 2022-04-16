@@ -2,7 +2,7 @@
   "name": "routhr_cli",
   "version": "1.0.0",
   "description": "",
-  "main": "./lib/bin/routhr-cli.js",
+  "main": "./lib/bin/routhr_cli.js",
   "dependencies": {
     "colorette": "^2.0.16",
     "commander": "^9.2.0",
@@ -16,14 +16,14 @@
     "typescript": "^4.6.3"
   },
   "bin": {
-    "routhr": "./lib/bin/routhr-cli.js"
+    "routhr": "./lib/bin/routhr_cli.js"
   },
   "files": [
     "lib"
   ],
   "scripts": {
-    "dev": "nodemon ./lib/bin/routhr-cli.js",
-    "start": "node ./lib/bin/routhr-cli.js",
+    "dev": "nodemon ./lib/bin/routhr_cli.js",
+    "start": "node ./lib/bin/routhr_cli.js",
     "build": "tsc -p tsconfig.json",
     "watch": "tsc -p tsconfig.json -w"
   },
