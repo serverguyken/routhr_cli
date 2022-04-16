@@ -1,0 +1,33 @@
+{
+  "name": "routhr_cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./lib/bin/routhr-cli.js",
+  "dependencies": {
+    "colorette": "^2.0.16",
+    "commander": "^9.2.0",
+    "inquirer": "^8.2.2"
+  },
+  "devDependencies": {
+    "@types/commander": "^2.12.2",
+    "@types/inquirer": "^8.2.1",
+    "@types/node": "^17.0.24",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.3"
+  },
+  "bin": {
+    "routhr": "./lib/bin/routhr-cli.js"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "dev": "nodemon ./lib/bin/routhr-cli.js",
+    "start": "node ./lib/bin/routhr-cli.js",
+    "build": "tsc -p tsconfig.json",
+    "watch": "tsc -p tsconfig.json -w"
+  },
+  "keywords": [],
+  "author": "Kehinde Akinsanya (ServerGuyken)",
+  "license": "MIT"
+}
