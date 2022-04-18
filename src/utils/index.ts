@@ -18,11 +18,10 @@ export const createPkg = (name: string) => {
         dependencies: {
             nodemon: "^2.0.15",
             routhr: "^1.0.14",
-            typescript: "^4.6.3"
-        },
-        directories: {
-            lib: "lib"
-        },
+            typescript: "^4.6.3",
+            cors: "^2.8.5",
+            dotenv: "^16.0.0"
+        }
     };
     return pkg;
 };
