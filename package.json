@@ -22,7 +22,7 @@
     "lib",
     "template"
   ],
-  "scripts": {
+  "scripts": { 
     "dev": "nodemon ./lib/bin/routhr_cli.js",
     "start": "node ./lib/bin/routhr_cli.js",
     "build": "tsc -p tsconfig.json",
