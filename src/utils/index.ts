@@ -5,10 +5,10 @@ export const createPkg = (name: string) => {
         name,
         version: "1.0.0",
         description: "",
-        main: "./lib/index.js",
+        main: "./.routhr/index.js",
         scripts: {
-            dev: "routhr --dev",
-            start: "routhr --start",
+            dev: "nodemon ./.routhr/index.js",
+            start: "node ./.routhr/index.js",
             build: "tsc -p tsconfig.json",
             watch: "tsc -p tsconfig.json --watch"
         },
@@ -18,7 +18,6 @@ export const createPkg = (name: string) => {
         dependencies: {
             nodemon: "^2.0.15",
             routhr: "^1.0.14",
-            routhrCli: "^1.0.0",
             typescript: "^4.6.3"
         },
         directories: {
@@ -35,7 +34,7 @@ export const createTsConfig = (contents?: string) => {
             "target": "es2016", /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
             /* Modules */
 
-            "outDir": "./lib",
+            "outDir": "./.routhr",
             "module": "commonjs", /* Specify what module code is generated. */
             "esModuleInterop": true,
             "forceConsistentCasingInFileNames": true, /* Ensure that casing is correct in imports. */
@@ -48,6 +47,14 @@ export const createTsConfig = (contents?: string) => {
         ]
     }
     return tsconfig;
+};
+
+export const createGitIgnore = () => {
+    const gitignore = `
+node_modules
+.routhr
+    `;
+    return gitignore;
 };
 
 export const createFile = (name: string, dir: string, content: string) => {
@@ -89,7 +96,7 @@ export const getDefaultConfig = (dir: string) => {
 
 export const getRouthrConfig = (path: string) => {
     if (!fs.existsSync(path)) {
-        throw new Error('routhr.config.json not found');
+        throw new Error(`no config file found at ${path}`);
     }
     const config = JSON.parse(fs.readFileSync(path, 'utf8'));
     return config;

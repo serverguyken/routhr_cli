@@ -1,5 +1,8 @@
 import { RequestInterface, ResponseInterface, NextFunctionInterface } from "routhr";
-const prodMiddleware = (req: RequestInterface, res: ResponseInterface, next: NextFunctionInterface) => {
+interface RequestI extends RequestInterface {
+    prodID?: string;
+}
+const prodMiddleware = (req: RequestI, res: ResponseInterface, next: NextFunctionInterface) => {
     // Check if a prodId query parameter is provided
     const prodID: any = req.query.prodID;
     if (!prodID || prodID === "") {
