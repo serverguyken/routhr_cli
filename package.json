@@ -1,6 +1,6 @@
 {
   "name": "routhr_cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "./lib/bin/routhr_cli.js",
   "dependencies": {
@@ -19,7 +19,8 @@
     "routhr": "./lib/bin/routhr_cli.js"
   },
   "files": [
-    "lib"
+    "lib",
+    "template"
   ],
   "scripts": {
     "dev": "nodemon ./lib/bin/routhr_cli.js",
