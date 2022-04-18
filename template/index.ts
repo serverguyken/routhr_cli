@@ -6,4 +6,4 @@ const routhr = new Routhr(port);
 routhr.use(cors());
 import routes from './route/routes';
 routhr.useRoutes(routes);
-routhr.listen();
+routhr.start();

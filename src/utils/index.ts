@@ -17,7 +17,7 @@ export const createPkg = (name: string) => {
         license: "ISC",
         dependencies: {
             nodemon: "^2.0.15",
-            routhr: "^1.0.14",
+            routhr: "^1.0.16",
             typescript: "^4.6.3",
             cors: "^2.8.5",
             dotenv: "^16.0.0"
