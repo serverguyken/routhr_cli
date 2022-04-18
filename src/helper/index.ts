@@ -1,6 +1,6 @@
 const process = require('process');
 import path from "path";
-import { createFile, createPkg, createTsConfig, createGitIgnore, getDefaultConfig, getRouthrConfig, createFolderFromTemplate } from "../utils";
+import { createFile, createPkg, createTsConfig, createGitIgnore, createReadMe, getDefaultConfig, getRouthrConfig, createFolderFromTemplate } from "../utils";
 import { Config } from "../interface/interface";
 const { performance } = require('perf_hooks');
 const out = process.stdout;
@@ -129,6 +129,7 @@ export const createProject = (name: string, options: {}) => {
         createFile('package.json', `./${projectName}`, pkg);
         createFile('tsconfig.json', `./${projectName}`, tsconfig);
         createFile('.gitignore', `./${projectName}`, createGitIgnore());
+        createFile('README.md', `./${projectName}`, createReadMe(projectName));
         // Init git
         spinner.stop();
         spinner.start(`Initializing git repository`);
