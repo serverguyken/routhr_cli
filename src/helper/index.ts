@@ -1,11 +1,17 @@
 const process = require('process');
 import path from "path";
 import { createFile, createPkg, createTsConfig, createGitIgnore, createReadMe, getDefaultConfig, getRouthrConfig, createFolderFromTemplate } from "../utils";
+import { createWatcher } from "./watcher";
 import { Config } from "../interface/interface";
 const { performance } = require('perf_hooks');
+import color from "../utils/color";
+import ip from 'ip';
 const out = process.stdout;
 const rdl = require("readline");
-
+const exec = require('child_process').exec;
+const getCompIp = () => {
+    return ip.address();
+}
 class Spinner {
     private spinner_name: string;
     private spinners: any;
@@ -66,55 +72,97 @@ export const doubleToSeconds = (double: number) => {
 }
 
 const initGitStep = (dir: string) => {
-    const exec = require('child_process').exec;
     const cmd = `cd ${dir} && git init && git add . && git commit -m "first commit" && git branch -M main`;
     exec(cmd, (err: any, stdout: any, stderr: any) => {
         if (err) {
-            return;
+            console.log(`${color.red('[routhr]')} Error initializing git`);
         }
-        console.log(stdout);
+        const spinner = new Spinner('dots');
+        spinner.start('Initializing git');
+        setTimeout(() => {
+            spinner.stop();
+        }, 1000);
     });
 }
 
 const installStep = (dir: string) => {
-    const exec = require('child_process').exec;
-    // check if yarn or npm is installed
+    // check if yarn or npm is installed and use the correct command to install dependencies and update
     const cmd = `cd ${dir} && yarn --version`;
     exec(cmd, (err: any, stdout: any, stderr: any) => {
        
         if (stdout) {
             // yarn is installed
-            const cmd = `cd ${dir} && yarn install`;
+            const cmd = `cd ${dir} && yarn install && yarn upgrade`;
             exec(cmd, (err: any, stdout: any, stderr: any) => {
                 if (err) {
-                    return;
+                    console.log(`${color.red('[routhr]')} Error installing dependencies`);
                 }
-                console.log(stdout);
+                const spinner = new Spinner('dots');
+                spinner.start('Installing dependencies');
+                setTimeout(() => {
+                    spinner.stop();
+                }, 1000);
             });
         } else {
             // npm is installed
-            const cmd = `cd ${dir} && npm install`;
+            const cmd = `cd ${dir} && npm install && npm update`;
             exec(cmd, (err: any, stdout: any, stderr: any) => {
                 if (err) {
-                    return;
+                    console.log(`${color.red('[routhr]')} Error installing dependencies`);
                 }
-                console.log(stdout);
+                const spinner = new Spinner('dots');
+                spinner.start('Installing dependencies');
+                setTimeout(() => {
+                    spinner.stop();
+                }, 1000);
             });
         }
     });
 }
 
 const compileTsStep = (dir: string) => {
-    const exec = require('child_process').exec;
     const cmd = `cd ${dir} && npm run build`;
     exec(cmd, (err: any, stdout: any, stderr: any) => {
         if (err) {
-            return;
+            console.log(`${color.red('[routhr]')} Error compiling typescript`);
         }
-        console.log(stdout);
+        const spinner = new Spinner('dots');
+        spinner.start('Compiling typescript');
+        setTimeout(() => {
+            spinner.stop();
+        }, 1000);
     });
 }
 
+
+
+const serverDevStep = (dir: string, port: number) => {
+    console.log('Starting dev server');
+    console.log(`${color.yellow('[routhr dev]')} Watching ${dir}`);
+    console.log(`${color.yellow('[routhr dev]')} Local: ${color.green(`http://localhost:${port}`)}`);
+    console.log(`${color.yellow('[routhr dev]')} Network: ${color.green(`http://${getCompIp()}:${port}`)}`);
+     createWatcher(dir, (path: string) => {
+         console.log(`${color.yellow('[routhr dev]')} File changed: ${color.green(path)}`); 
+         console.log(`${color.yellow('[routhr dev]')} Restarting server`);
+         setTimeout(() => {
+             console.log(`${color.yellow('[routhr dev]')} Server restarted`);
+            }, 0);
+     }); 
+ 
+}
+
+const serverProdStep = (dir: string, port: number) => {
+    console.log('Starting production server');
+    const cmd = 'node ./.routhr/index.js';
+    exec(cmd, (err: any, stdout: any, stderr: any) => {
+        if (err) {
+            console.log(`${color.red('[routhr prod]')} Error starting server`);
+        }
+        else {
+            return;
+        }
+    });
+}
 
 export const createProject = (name: string, options: {}) => {
     const projectName = name;
@@ -134,15 +182,15 @@ export const createProject = (name: string, options: {}) => {
         spinner.stop();
         spinner.start(`Initializing git repository`);
         initGitStep(projectDir);
+        spinner.stop();
         setTimeout(() => {
             // Install dependencies
-            spinner.stop();
             spinner.start(`Installing dependencies`);
             installStep(projectDir);
+            spinner.stop();
         }, 1000);
         // Compile typescript
         setTimeout(() => {
-            spinner.stop();
             spinner.start(`Compiling typescript`);
             compileTsStep(projectDir);
             spinner.stop();
@@ -151,7 +199,7 @@ export const createProject = (name: string, options: {}) => {
         const time_taken = doubleToSeconds(end_time - start_time);
         console.log(`Project created in ${time_taken} ms`);
         return;
-    }, 4000);
+    }, 1000);
 }
 
 
@@ -159,25 +207,37 @@ export const createProject = (name: string, options: {}) => {
 const createDevServer = (config: Config, options: {
     port?: number,
 }) => {
-    let port = config.port;
+    let port = 3000;
+    if (config['server'] && config['server'].port) {
+        port = config.server.port;
+    }
     if (options.port) {
         port = options.port;
     }
-    console.log(`Starting dev server on port ${port}`);
+    let path = './';
+    if (config['server'] && config['server'].entryFile) {
+        path = config.server.entryFile;
+    } else {
+        throw new Error('No entry file found in config');
+    }
+    serverDevStep(path, port);
 }
 
 const createServer = (config: Config, options: {
     port?: number,
 }) => {
-    let port = config.port;
+    let port = 3000;
+    if (config['server'] && config['server'].port) {
+        port = config.server.port;
+    }
     if (options.port) {
         port = options.port;
     }
-    console.log(`Starting server on port ${port}`);
-    const app = require('./app');
-    app.listen(port, () => {
-        console.log(`Server started on port ${port}`);
-    });
+    let path = './.routhr/index.js';
+    if (config['server'] && config['server'].entryFile) {
+        path = config.server.entryFile;
+    }
+    serverProdStep(path, port);
 }
 
 export const devServer = (configPath: string | null, options: {
@@ -213,8 +273,8 @@ export const createLog = () => {
     console.log(`\n`);
     console.log(`Commands:`);
     console.log(`  create [options] <project-name>      create a new project`);
-    //console.log(`  dev [options]                        start dev server`);
-    //console.log(`  start [options]                      start server`);
+    console.log(`  dev [options]                        start dev server`);
+    console.log(`  start [options]                      start server`);
     console.log(`\n`);
 };
 

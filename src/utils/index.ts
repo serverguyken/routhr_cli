@@ -7,17 +7,16 @@ export const createPkg = (name: string) => {
         description: "",
         main: "./.routhr/index.js",
         scripts: {
-            dev: "nodemon ./.routhr/index.js",
-            start: "node ./.routhr/index.js",
+            dev: "routhr dev",
+            start: "routhr start",
             build: "tsc -p tsconfig.json",
             watch: "tsc -p tsconfig.json --watch"
         },
         keywords: [],
-        "author": "",
+        author: "",
         license: "ISC",
         dependencies: {
-            nodemon: "^2.0.15",
-            routhr: "^1.0.16",
+            routhr: "^1.1.0",
             typescript: "^4.6.3",
             cors: "^2.8.5",
             dotenv: "^16.0.0"
@@ -51,9 +50,9 @@ export const createTsConfig = (contents?: string) => {
 export const createGitIgnore = () => {
     const gitignore = `
 node_modules
-.routhr
+.routhr 
     `;
-    return gitignore;
+    return gitignore; 
 };
 
 export const createReadMe = (name: string) => {
