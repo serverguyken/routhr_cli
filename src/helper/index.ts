@@ -130,7 +130,7 @@ const compileTsStep = (dir: string) => {
         spinner.start('Compiling typescript');
         setTimeout(() => {
             spinner.stop();
-        }, 1000);
+        }, 1000); 
     });
 }
 
@@ -138,12 +138,10 @@ const compileTsStep = (dir: string) => {
 
 const serverDevStep = (dir: string, port: number) => {
     console.log('Starting dev server');
-    console.log(`${color.yellow('[routhr dev]')} Watching ${dir}`);
-    console.log(`${color.yellow('[routhr dev]')} Local: ${color.green(`http://localhost:${port}`)}`);
-    console.log(`${color.yellow('[routhr dev]')} Network: ${color.green(`http://${getCompIp()}:${port}`)}`);
+    console.log(`${color.yellow('[routhr dev]')} Watching file(s): ${dir}`);
      createWatcher(dir, (path: string) => {
-         console.log(`${color.yellow('[routhr dev]')} File changed: ${color.green(path)}`); 
-         console.log(`${color.yellow('[routhr dev]')} Restarting server`);
+         console.log(`${color.yellow(`[routhr dev] ${color.redBright('[event]')}`)} File changed: ${color.green(path)}`); 
+         console.log(`${color.yellow(`[routhr dev] ${color.cyan('[wait]')}`)} Restarting server`);
          setTimeout(() => {
              console.log(`${color.yellow('[routhr dev]')} Server restarted`);
             }, 0);
