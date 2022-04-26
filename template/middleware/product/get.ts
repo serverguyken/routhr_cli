@@ -1,5 +1,6 @@
 import { RequestInterface, ResponseInterface, NextFunctionInterface } from "routhr";
 interface RequestI extends RequestInterface {
+    routhr?: any;
     prodID?: string;
 }
 const prodMiddleware = (req: RequestI, res: ResponseInterface, next: NextFunctionInterface) => {
