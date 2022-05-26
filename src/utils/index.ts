@@ -16,6 +16,7 @@ export const createPkg = (name: string) => {
         author: "",
         license: "ISC",
         dependencies: {
+            
             routhr: "^1.1.0",
             typescript: "^4.6.3",
             cors: "^2.8.5",
