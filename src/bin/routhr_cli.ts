@@ -130,7 +130,7 @@ if (commands.create) {
         const project_name = command2;
         createProject(project_name, options_)
     }
-}
+} 
 // else if (commands.dev) {
 //     setUp();
 //     if (argv._.length === 1) {

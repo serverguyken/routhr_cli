@@ -9,7 +9,7 @@ const setPath = (path: string) =>{
     }
     return path;
 } 
-
+ 
 export const createWatcher = (path: string, callback: (path: string) => void) => {
     setPath(path);
     const watcher = chokidar.watch(path, {

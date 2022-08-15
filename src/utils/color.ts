@@ -11,4 +11,4 @@ const color = {
     yellow: (str: string) => yellow(str),
     yellowBright: (str: string) => yellowBright(str),
 }
-export default color
+export default color 

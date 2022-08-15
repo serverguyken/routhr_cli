@@ -22,8 +22,7 @@ export const createPkg = (name: string) => {
         author: "",
         license: "ISC",
         dependencies: {
-            routhr_cli: "^1.0.9",
-            routhr: "^1.1.0",
+            routhr: "^1.2.1",
             typescript: "^4.6.3",
             cors: "^2.8.5",
             dotenv: "^16.0.0"
@@ -45,7 +44,8 @@ export const createTsConfig = (contents?: string) => {
             "forceConsistentCasingInFileNames": true, /* Ensure that casing is correct in imports. */
             /* Type Checking */
             "strict": true, /* Enable all strict type-checking options. */
-            "skipLibCheck": true /* Skip type checking all .d.ts files. */
+            "skipLibCheck": true, /* Skip type checking all .d.ts files. */
+            "declaration": true, /* Generates corresponding .d.ts files. */
         },
         "exclude": [
             "node_modules",
@@ -82,7 +82,7 @@ export const createFile = (name: string, dir: string, content: string) => {
     fs.writeFileSync(filePath, content);
     return filePath;
 };
-
+ 
 export const createFolderFromTemplate = (name: string, dir: string, templateDir: string) => {
     // check if the folder exists with the name
     const folderPath = path.join(dir, name);
