@@ -35,7 +35,7 @@ const setCommandError = () => {
     console.log('Unknown command');
     console.log(`Please use ${color.yellow('routhr <command>')}`);
     //console.log(`Available command: ${color.yellow('create')}`);
-    console.log(`Available commands: ${color.yellow('create, dev, start')}`);
+    console.log(`Available commands: ${color.yellow('create')}`);
     process.exit(1);
 };
 //console.log(argv);
