@@ -271,12 +271,12 @@ export const createLog = () => {
     console.log(`\n`);
     console.log(`Options:`);
     console.log(`  -v, --version    show version`);
-    console.log(`  -h, --help       show help`);
+    //console.log(`  -h, --help       show help`);
     console.log(`\n`);
     console.log(`Commands:`);
     console.log(`  create [options] <project-name>      create a new project`);
-    console.log(`  dev [options]                        start dev server`);
-    console.log(`  start [options]                      start server`);
+    // console.log(`  dev [options]                        start dev server`);
+    // console.log(`  start [options]                      start server`);
     console.log(`\n`);
 };
 
