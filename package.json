@@ -1,6 +1,6 @@
 {
   "name": "routhr_cli",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "",
   "main": "./lib/bin/routhr_cli.js",
   "dependencies": {
@@ -8,7 +8,6 @@
     "colorette": "^2.0.16",
     "inquirer": "^8.2.2",
     "ip": "^1.1.5",
-    "routhr": "^1.1.4",
     "yargs": "^17.4.1"
   },
   "devDependencies": {

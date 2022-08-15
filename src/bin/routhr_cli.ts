@@ -30,8 +30,6 @@ const commands: Commands = {
     // 'dev': argv._[0] === 'dev',
     // 'start': argv._[0] === 'start'
 }
-console.log(commands);
-
 const command2 = argv._[1];
 const setCommandError = () => {
     console.log('Unknown command');
