@@ -1,5 +1,11 @@
 import fs from 'fs';
 import path from 'path';
+import { exec } from "child_process";
+import { promisify } from "util";
+import { Config } from '../interface/interface';
+
+export const execa = promisify(exec);
+
 export const createPkg = (name: string) => {
     const pkg = {
         name,
@@ -7,8 +13,8 @@ export const createPkg = (name: string) => {
         description: "",
         main: "./.routhr/index.js",
         scripts: {
-            dev: "routhr dev",
-            start: "routhr start",
+            dev: "nodemon ./.routhr/index.js",
+            start: "node ./.routhr/index.js",
             build: "tsc -p tsconfig.json",
             watch: "tsc -p tsconfig.json --watch"
         },
@@ -115,6 +121,16 @@ export const getRouthrConfig = (path: string) => {
     const config = JSON.parse(fs.readFileSync(path, 'utf8'));
     return config;
 };
+
+export const getPackageManager = (config: Config) => {
+    if (config.server.packageManager === 'npm') {
+        return 'npm';
+    } else if (config.server.packageManager === 'yarn') {
+        return 'yarn';
+    } else {
+        throw new Error('no package manager found in config file');
+    }
+}
 
 export const createTemplate = (name: string, dir: string, content: string) => {
     const filePath = path.join(dir, name);

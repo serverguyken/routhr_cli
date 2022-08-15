@@ -1,6 +1,6 @@
 const process = require('process');
 import path from "path";
-import { createFile, createPkg, createTsConfig, createGitIgnore, createReadMe, getDefaultConfig, getRouthrConfig, createFolderFromTemplate } from "../utils";
+import { createFile, createPkg, createTsConfig, createGitIgnore, createReadMe, getDefaultConfig, getRouthrConfig, createFolderFromTemplate, getPackageManager } from "../utils";
 import { createWatcher } from "./watcher";
 import { Config } from "../interface/interface";
 const { performance } = require('perf_hooks');
@@ -9,6 +9,7 @@ import ip from 'ip';
 const out = process.stdout;
 const rdl = require("readline");
 const exec = require('child_process').exec;
+import { execa } from '../utils';
 const getCompIp = () => {
     return ip.address();
 }
@@ -46,7 +47,7 @@ class Spinner {
         const frames = spin.frames;
         const interval = spin.interval;
         let index = 0;
-        this.timer = setInterval(() => { 
+        this.timer = setInterval(() => {
             let now = frames[index];
             if (now === undefined) {
                 index = 0;
@@ -71,82 +72,89 @@ export const doubleToSeconds = (double: number) => {
     return seconds.toFixed(2);
 }
 
-const initGitStep = (dir: string) => {
+let initGitDone = false;
+let installDone = false;
+let compileTsDone = false;
+
+const initGitStep = async (dir: string) => {
     const cmd = `cd ${dir} && git init && git add . && git commit -m "first commit" && git branch -M main`;
-    exec(cmd, (err: any, stdout: any, stderr: any) => {
-        if (err) {
-            console.log(`${color.red('[routhr]')} Error initializing git`);
-        }
+    try {
+        let stdOut = await execa(cmd, { cwd: dir });
         const spinner = new Spinner('dots');
-        spinner.start('Initializing git');
+        spinner.start('Initializing git repository');
+        console.log(stdOut.stdout);
         setTimeout(() => {
             spinner.stop();
+            initGitDone = true;
         }, 1000);
-    });
+    } catch (error) {
+        console.log(`${color.red('[routhr]')} Error initializing git`);
+    }
 }
 
-const installStep = (dir: string) => {
+const installStep = async (dir: string) => {
     // check if yarn or npm is installed and use the correct command to install dependencies and update
-    const cmd = `cd ${dir} && yarn --version`;
-    exec(cmd, (err: any, stdout: any, stderr: any) => {
-       
-        if (stdout) {
-            // yarn is installed
-            const cmd = `cd ${dir} && yarn install && yarn upgrade`;
-            exec(cmd, (err: any, stdout: any, stderr: any) => {
-                if (err) {
-                    console.log(`${color.red('[routhr]')} Error installing dependencies`);
-                }
-                const spinner = new Spinner('dots');
-                spinner.start('Installing dependencies');
-                setTimeout(() => {
-                    spinner.stop();
-                }, 1000);
-            });
-        } else {
-            // npm is installed
-            const cmd = `cd ${dir} && npm install && npm update`;
-            exec(cmd, (err: any, stdout: any, stderr: any) => {
-                if (err) {
-                    console.log(`${color.red('[routhr]')} Error installing dependencies`);
-                }
-                const spinner = new Spinner('dots');
-                spinner.start('Installing dependencies');
-                setTimeout(() => {
-                    spinner.stop();
-                }, 1000);
-            });
-        }
-    });
+    const config = getDefaultConfig(dir);
+    const packageManager = getPackageManager(config);
+    const cmd = `cd ${dir} && ${packageManager} install`;
+    try {
+        let stdOut = await execa(cmd);
+        console.log(stdOut.stdout);
+        const spinner = new Spinner('dots');
+        spinner.start('Installing dependencies');
+        setTimeout(() => {
+            spinner.stop();
+            installDone = true;
+        }, 1000);
+    } catch (error) {
+        console.log(`${color.red('[routhr]')} Error installing dependencies`);
+    }
 }
 
-const compileTsStep = (dir: string) => {
+const compileTsStep = async (dir: string) => {
     const cmd = `cd ${dir} && npm run build`;
-    exec(cmd, (err: any, stdout: any, stderr: any) => {
-        if (err) {
-            console.log(`${color.red('[routhr]')} Error compiling typescript`);
-        }
+    try {
+        let stdOut = await execa(cmd);
+        console.log(stdOut.stdout);
         const spinner = new Spinner('dots');
         spinner.start('Compiling typescript');
         setTimeout(() => {
             spinner.stop();
-        }, 1000); 
-    });
+            compileTsDone = true;
+        }, 1000);
+    } catch (error) {
+        console.log(`${color.red('[routhr]')} Error compiling typescript`);
+    }
 }
 
 
 
-const serverDevStep = (dir: string, port: number) => {
+const serverDevStep = (dir: string, config: Config, port: number) => {
     console.log('Starting dev server');
     console.log(`${color.yellow('[routhr dev]')} Watching file(s): ${dir}`);
-     createWatcher(dir, (path: string) => {
-         console.log(`${color.yellow(`[routhr dev] ${color.redBright('[event]')}`)} File changed: ${color.green(path)}`); 
-         console.log(`${color.yellow(`[routhr dev] ${color.cyan('[wait]')}`)} Restarting server`);
-         setTimeout(() => {
-             console.log(`${color.yellow('[routhr dev]')} Server restarted`);
-            }, 0);
-     }); 
- 
+    // start dev server
+    // run nodemon with the correct file path
+    const cmd = `cd ${dir} && node ${config.server.path}`;
+    exec(cmd, (err: any, stdout: any, stderr: any) => {
+        if (err) {
+            console.log(err);
+            console.log(`${color.red('[routhr]')} Error starting dev server`);
+        } else {
+            const spinner = new Spinner('dots');
+            spinner.start('Starting dev server');
+            setTimeout(() => {
+                spinner.stop();
+            }, 1000);
+        }
+
+    })
+    //  createWatcher(dir, (path: string) => {
+    //      console.log(`${color.yellow(`[routhr dev] ${color.redBright('[event]')}`)} File changed: ${color.green(path)}`); 
+    //      console.log(`${color.yellow(`[routhr dev] ${color.cyan('[wait]')}`)} Restarting server`);
+    //      setTimeout(() => {
+    //          console.log(`${color.yellow('[routhr dev]')} Server restarted`);
+    //         }, 0);
+    //  }); 
 }
 
 const serverProdStep = (dir: string, port: number) => {
@@ -161,6 +169,8 @@ const serverProdStep = (dir: string, port: number) => {
         }
     });
 }
+
+
 
 export const createProject = (name: string, options: {}) => {
     const projectName = name;
@@ -177,25 +187,19 @@ export const createProject = (name: string, options: {}) => {
         createFile('.gitignore', `./${projectName}`, createGitIgnore());
         createFile('README.md', `./${projectName}`, createReadMe(projectName));
         // Init git
-        spinner.stop();
-        spinner.start(`Initializing git repository`);
         initGitStep(projectDir);
-        spinner.stop();
         setTimeout(() => {
             // Install dependencies
-            spinner.start(`Installing dependencies`);
             installStep(projectDir);
-            spinner.stop();
-        }, 1000);
-        // Compile typescript
-        setTimeout(() => {
-            spinner.start(`Compiling typescript`);
-            compileTsStep(projectDir);
-            spinner.stop();
+            // Compile typescript
+            setTimeout(() => {
+                compileTsStep(projectDir);
+            }, 1000);
         }, 1000);
         const end_time = performance.now();
         const time_taken = doubleToSeconds(end_time - start_time);
         console.log(`Project created in ${time_taken} ms`);
+        spinner.stop();
         return;
     }, 1000);
 }
@@ -218,7 +222,7 @@ const createDevServer = (config: Config, options: {
     } else {
         throw new Error('No entry file found in config');
     }
-    serverDevStep(path, port);
+    serverDevStep(path, config, port);
 }
 
 const createServer = (config: Config, options: {
@@ -249,7 +253,7 @@ export const devServer = (configPath: string | null, options: {
         createDevServer(config, options);
     }
 }
-export const startServer = (configPath: string| null, options: {
+export const startServer = (configPath: string | null, options: {
     port?: number,
 }) => {
     if (configPath === null) {
@@ -277,7 +281,7 @@ export const createLog = () => {
 };
 
 
-export const createCreateLog = () => { 
+export const createCreateLog = () => {
     const command_usage = `Usage: create [options] <project-name>`;
     console.log(command_usage);
     console.log(`\n`);

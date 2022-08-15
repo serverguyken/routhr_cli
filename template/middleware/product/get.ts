@@ -5,7 +5,7 @@ interface RequestI extends RequestInterface {
 }
 const prodMiddleware = (req: RequestI, res: ResponseInterface, next: NextFunctionInterface) => {
     // Check if a prodId query parameter is provided
-    const prodID: any = req.routhr?.route.queries.prodID;
+    const { prodID } = req.routhr?.route.queries;
     if (!prodID || prodID === "") {
         res.status(400).send({
             message: "Missing prodID parameter.",
