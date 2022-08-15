@@ -123,8 +123,6 @@ const compileTsStep = async (dir: string) => {
             compileTsDone = true;
         }, 1000);
     } catch (error) {
-        console.log(error);
-        
         console.log(`${color.red('[routhr]')} Error compiling typescript`);
     }
 }
