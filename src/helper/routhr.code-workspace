@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"name": "routhr",
+			"path": "..\\..\\..\\routhr"
+		},
+		{
+			"name": "routhr_cli",
+			"path": "..\\.."
+		}
+	]
+}

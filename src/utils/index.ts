@@ -106,7 +106,7 @@ export const createFolderFromTemplate = (name: string, dir: string, templateDir:
 };
 
 
-export const getDefaultConfig = (dir: string) => {
+export const getDefaultConfig = (dir: string): Config => {
     if (!fs.existsSync(path.join(dir, 'routhr.config.json'))) {
         throw new Error('routhr.config.json not found');
     }

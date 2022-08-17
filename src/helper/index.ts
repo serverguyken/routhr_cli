@@ -96,18 +96,39 @@ const installStep = async (dir: string) => {
     // check if yarn or npm is installed and use the correct command to install dependencies and update
     const config = getDefaultConfig(dir);
     const packageManager = getPackageManager(config);
-    const cmd = `cd ${dir} && ${packageManager} install`;
-    try {
-        let stdOut = await execa(cmd);
-        console.log(stdOut.stdout);
-        const spinner = new Spinner('dots');
-        spinner.start('Installing dependencies');
-        setTimeout(() => {
-            spinner.stop();
-            installDone = true;
-        }, 1000);
-    } catch (error) {
-        console.log(`${color.red('[routhr]')} Error installing dependencies`);
+    const dependencies = config.dependencies || [];
+    const devDependencies = config.devDependencies || [];
+    for (let i = 0; i < dependencies.length; i++) {
+        const dependency = dependencies[i];
+        const cmd = `cd ${dir} && ${packageManager} install ${dependency}`;
+        try {
+            let stdOut = await execa(cmd, { cwd: dir });
+            console.log(stdOut.stdout);
+            const spinner = new Spinner('dots');
+            spinner.start('Installing dev dependencies');
+            setTimeout(() => {
+                spinner.stop();
+                installDone = true;
+            }, 1000);
+        } catch (error) {
+            console.log(`${color.red('[routhr]')} Error installing ${dependency}`);
+        }
+    }
+    for (let i = 0; i < devDependencies.length; i++) {
+        const devDependency = devDependencies[i];
+        const cmd = `cd ${dir} && ${packageManager} install ${devDependency}`;
+        try {
+            let stdOut = await execa(cmd, { cwd: dir });
+            console.log(stdOut.stdout);
+            const spinner = new Spinner('dots');
+            spinner.start('Installing dev dependencies');
+            setTimeout(() => {
+                spinner.stop();
+                installDone = true;
+            }, 1000);
+        } catch (error) {
+            console.log(`${color.red('[routhr]')} Error installing ${devDependency}`);
+        }
     }
 }
 

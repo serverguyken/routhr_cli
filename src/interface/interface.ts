@@ -13,7 +13,9 @@ export interface Config {
          * The package manager to use.
          */
         packageManager: 'npm' | 'yarn';
-    }
+    },
+    dependencies: string[];
+    devDependencies: string[];
 }
 
 export interface Commands {

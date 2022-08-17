@@ -2,5 +2,6 @@
     "server": {
         "entryFile": "./",
         "packageManager": "npm"
-    }
+    },
+    "dependencies": ["routhr", "typescript", "cors", "dotenv"]
 }
