@@ -13,7 +13,7 @@ export const createPkg = (name: string) => {
         description: "",
         main: "./.routhr/index.js",
         scripts: {
-            dev: "nodemon ./.routhr/index.js",
+            dev: "nodemon --watch ./.routhr/index.js",
             start: "node ./.routhr/index.js",
             build: "tsc -p tsconfig.json",
             watch: "tsc -p tsconfig.json --watch"
