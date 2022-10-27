@@ -2,11 +2,11 @@ import Routhr from 'routhr';
 const port: any = process.env.PORT || 3002;
 const cors = require('cors');
 require('dotenv').config();
-const routhr = new Routhr();
-routhr.use(cors());
-routhr.use(routhr.middleware.bodyParser.json);
+const app = new Routhr();
+app.use(cors());
+app.use(app.middleware.bodyParser.json);
 import routes from './route/';
-routhr.useRoutes(routes);
-routhr.start(port, () => {
+app.useRoutes(routes);
+app.start(port, () => {
     console.log(`Server started on port ${port}`);
 });
