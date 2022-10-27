@@ -23,6 +23,12 @@ export interface Commands {
     '--version': boolean;
     'version': boolean;
     'create': boolean;
-    // 'dev': boolean;
-    // 'start': boolean;
+}
+
+export interface Answers {
+    name: string;
+    description: string;
+    packageManager: 'npm' | 'yarn';
+    git: boolean;
+    install: boolean;
 }

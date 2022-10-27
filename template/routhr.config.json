@@ -1,6 +1,6 @@
 {
     "server": {
-        "entryFile": "./",
+        "entryFile": ".routhr/index.js",
         "packageManager": "npm"
     },
     "dependencies": ["routhr", "typescript", "cors", "dotenv"]

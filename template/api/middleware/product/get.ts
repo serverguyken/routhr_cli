@@ -5,15 +5,13 @@ interface RequestI extends RequestInterface {
 }
 const prodMiddleware = (req: RequestI, res: ResponseInterface, next: NextFunctionInterface) => {
     // Check if a prodId query parameter is provided
-    const { prodID } = req.routhr?.route.queries;
-    if (!prodID || prodID === "") {
+    const { prodID } = req.routhr?.route.params;
+    if (!prodID || prodID === "" || prodID === "undefined" || prodID === "null") {
         res.status(400).send({
-            message: "Missing prodID parameter.",
+            message: "Missing product id",
         });
     }
-
     else {
-        req.prodID = prodID;
         next();
     }
 };

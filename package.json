@@ -1,18 +1,22 @@
 {
   "name": "routhr_cli",
-  "version": "1.1.8",
+  "version": "1.2.2",
   "description": "",
   "main": "./lib/bin/routhr_cli.js",
   "dependencies": {
     "chokidar": "^3.5.3",
     "colorette": "^2.0.16",
+    "cross-spawn": "^7.0.3",
     "inquirer": "^8.2.2",
     "ip": "^1.1.5",
+    "listr": "^0.14.3",
     "yargs": "^17.4.1"
   },
   "devDependencies": {
+    "@types/cross-spawn": "^6.0.2",
     "@types/inquirer": "^8.2.1",
     "@types/ip": "^1.1.0",
+    "@types/listr": "^0.14.4",
     "@types/node": "^17.0.24",
     "@types/yargs": "^17.0.10",
     "ts-node": "^10.7.0",
@@ -26,10 +30,10 @@
     "template"
   ],
   "scripts": {
-    "dev": "nodemon ./lib/bin/routhr_cli.js",
     "start": "node ./lib/bin/routhr_cli.js",
     "build": "tsc -p tsconfig.json",
-    "watch": "tsc -p tsconfig.json -w"
+    "watch": "tsc -p tsconfig.json -w",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [],
   "author": "Kehinde Akinsanya (ServerGuyken)",
