@@ -11,4 +11,4 @@ $ npm install -g routhr-cli
 # Usage
 
 ```bash
-$ routhr -c <project-name>
+$ routhr new
