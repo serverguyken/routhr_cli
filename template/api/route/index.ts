@@ -1,6 +1,6 @@
 import { RouteInterface, RequestInterface, ResponseInterface } from 'routhr';
 const api_version = process.env.API_VERSION || 'v1';
-import prodHandler from './handler/product/get';
+import prodHandler from '../handler/product/get';
 import prodMiddleware from '../middleware/product/get';
 const routes: RouteInterface[] = [
     {
