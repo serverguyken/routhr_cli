@@ -22,7 +22,7 @@ export interface Commands {
     '-v': boolean;
     '--version': boolean;
     'version': boolean;
-    'create': boolean;
+    'new': boolean;
 }
 
 export interface Answers {

@@ -26,14 +26,14 @@ const commands: Commands = {
     '-v': argv?.v === true,
     '--version': argv?.version === true,
     'version': argv._[0] === 'version',
-    'create': argv._[0] === 'create',
+    'new': argv._[0] === 'new',
 }
 
 const setCommandError = () => {
     console.log('Unknown command');
     console.log(`Please use ${color.yellow('routhr <command>')}`);
-    //console.log(`Available command: ${color.yellow('create')}`);
-    console.log(`Available commands: ${color.yellow('create')}`);
+    //console.log(`Available command: ${color.yellow('new')}`);
+    console.log(`Available commands: ${color.yellow('new')}`);
 };
 //console.log(argv);
 const options_get = argv;
@@ -163,7 +163,7 @@ const init = async () => {
         console.log(`Routhr CLI version: ${routhr_cli_pkg.version}`);
         process.exit(0);
     }
-    else if (commands['create']) {
+    else if (commands['new']) {
         setUp();
         if (options.name.hasValue && options.default.value) {
             const answers: Answers = {
