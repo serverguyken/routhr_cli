@@ -1,5 +1,5 @@
 import Routhr, { RequestInterface, ResponseInterface, createStatus, createResponse } from "routhr";
-import { ProductsService } from "../../../database/service";
+import services from "../../../database/service";
 
 interface Product {
     id: string;
@@ -9,8 +9,8 @@ interface Product {
 
 const prodHandler = async (req: RequestInterface, res: ResponseInterface) => {
     const prodID = req.params.prodID as string;
-    const service = new ProductsService();
-    const product = await service.FindProductById(prodID);
+    const productService = new services.ProductsService();
+    const product = await productService.FindProductById(prodID);
     const status = createStatus(200, 0, product ? `Product with id ${prodID} found.` : `Product with id ${prodID} not found.`);
     const response = createResponse(status, product);
     res.status(200).json(response);

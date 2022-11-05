@@ -1,4 +1,6 @@
 import ProductsService from "./products";
-export {
-    ProductsService,
-}
+const services = {
+    ProductsService
+};
+
+export default services;
