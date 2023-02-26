@@ -64,7 +64,7 @@ for (let key in options_get) {
     }
     if (key === 'n') {
         options.name.hasValue = true;
-        options.name.value = options_get.n;
+        options.name.value = options_get.n !== true ? options_get.n : '';
     }
 }
 
@@ -174,7 +174,10 @@ const init = async () => {
                 install: true
             }
             createProject(answers);
-        } else if (options.name.hasValue && !options.default.value) {
+        } else if (options.name.hasValue && !options.default.value && options.name.value === '') {
+            console.log(color.red('Please enter a name for your project'));
+            process.exit(1);
+        } else if (options.name.hasValue && !options.default.value && options.name.value !== '') {
             console.log(`Creating a new project with name ${color.yellow(options.name.value)}`);
             const { name, description, packageManager, git, install } = await inquirer.prompt(question2);
             createProject({

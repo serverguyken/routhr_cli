@@ -65,7 +65,7 @@ export const createLog = () => {
     //console.log(`  -h, --help       show help`);
     console.log(`\n`);
     console.log(`Commands:`);
-    console.log(`  create [options] <project-name>      create a new project`);
+    console.log(`  new [options] <project-name>      create a new project`);
     // console.log(`  dev [options]                        start dev server`);
     // console.log(`  start [options]                      start server`);
     console.log(`  version                              show version`);

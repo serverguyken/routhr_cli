@@ -1,5 +1,5 @@
 import Routhr, { RequestInterface, ResponseInterface, createStatus, createResponse } from "routhr";
-import services from "../../../database/service";
+import services from "../../../service";
 
 interface Product {
     id: string;
