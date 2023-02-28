@@ -1,6 +1,6 @@
 {
   "name": "routhr_cli",
-  "version": "1.2.9",
+  "version": "1.2.10",
   "description": "",
   "main": "./lib/bin/routhr_cli.js",
   "dependencies": {
