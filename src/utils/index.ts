@@ -90,6 +90,9 @@ export const createTsConfig = (contents?: string) => {
 
 export const createGitIgnore = () => {
     const gitignore = `
+    .env
+    .env.development
+    .env.production
 node_modules
 .routhr 
     `;
