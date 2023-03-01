@@ -65,6 +65,7 @@ export const createPkg = (name: string, description: string) => {
         devDependencies: {
             "nodemon": "^2.0.20",
             "@types/cors": "^2.8.12",
+            "cross-env": "^7.0.3",
         }
     };
     return pkg;
