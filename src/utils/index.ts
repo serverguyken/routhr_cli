@@ -44,10 +44,14 @@ export const createPkg = (name: string, description: string) => {
         description,
         main: "./.routhr/index.js",
         scripts: {
-            dev: "nodemon --watch ./.routhr/",
-            start: "node ./.routhr/index.js",
-            build: "tsc -p tsconfig.json",
-            watch: "tsc -p tsconfig.json --watch"
+            "dev": "cross-env NODE_ENV=development nodemon --watch ./.routhr/",
+            "dev:windows": "SET NODE_ENV=development&& nodemon --watch ./.routhr/",
+            "dev:linux": "NODE_ENV=development&& nodemon ./.routhr/index.js ",
+            "start": "cross-env NODE_ENV=production node ./.routhr/index.js",
+            "start:windows": "SET NODE_ENV=production&& node ./.routhr/index.js ",
+            "start:linux": "NODE_ENV=production&& node ./.routhr/index.js ",
+            "build": "tsc -p tsconfig.json",
+            "watch": "tsc -p tsconfig.json --watch"
         },
         keywords: [],
         author: "",
@@ -60,6 +64,7 @@ export const createPkg = (name: string, description: string) => {
         },
         devDependencies: {
             "nodemon": "^2.0.20",
+            "@types/cors": "^2.8.12",
         }
     };
     return pkg;
