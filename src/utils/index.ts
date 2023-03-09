@@ -44,12 +44,12 @@ export const createPkg = (name: string, description: string) => {
         description,
         main: "./.routhr/index.js",
         scripts: {
-            "dev": "cross-env NODE_ENV=development nodemon --watch ./.routhr/",
-            "dev:windows": "SET NODE_ENV=development&& nodemon --watch ./.routhr/",
-            "dev:linux": "NODE_ENV=development&& nodemon ./.routhr/index.js ",
-            "start": "node_modules/cross-env/src/bin/cross-env.js NODE_ENV=production node ./.routhr/index.js",
-            "start:windows": "node_modules/cross-env/src/bin/cross-env.js SET NODE_ENV=production && node ./.routhr/index.js ",
-            "start:linux": "node_modules/cross-env/src/bin/cross-env.js NODE_ENV=production && node ./.routhr/index.js ",
+            "dev": "cross-env NODE_ENV=development pm2-dev ./.routhr/",
+            "dev:windows": "SET NODE_ENV=development&& pm2-dev ./.routhr/",
+            "dev:linux": "NODE_ENV=development&& pm2-dev ./.routhr/index.js",
+            "start": `cross-env NODE_ENV=production pm2 start --name '${name}' -f ./.routhr/index.js`,
+            "start:windows": `SET NODE_ENV=production&& pm2 start --name '${name}' -f ./.routhr/index.js`,
+            "start:linux": `NODE_ENV=production&& pm2 start --name '${name}' -f ./.routhr/index.js`,
             "build": "tsc -p tsconfig.json",
             "watch": "tsc -p tsconfig.json --watch"
         },
@@ -60,6 +60,7 @@ export const createPkg = (name: string, description: string) => {
             routhr: "^1.6.2",
             typescript: "^4.6.3",
             cors: "^2.8.5",
+            pm2: "^5.2.2",
             dotenv: "^16.0.0",
         },
         devDependencies: {
