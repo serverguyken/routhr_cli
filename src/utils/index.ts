@@ -44,9 +44,9 @@ export const createPkg = (name: string, description: string) => {
         description,
         main: "./.routhr/index.js",
         scripts: {
-            "dev": "cross-env NODE_ENV=development pm2-dev ./.routhr/",
-            "dev:windows": "SET NODE_ENV=development&& pm2-dev ./.routhr/",
-            "dev:linux": "NODE_ENV=development&& pm2-dev ./.routhr/index.js",
+            "dev": "cross-env NODE_ENV=development nodemon --watch ./.routhr/",
+            "dev:windows": "SET NODE_ENV=development&& nodemon --watch ./.routhr/",
+            "dev:linux": "NODE_ENV=development&& nodemon --watch ./.routhr/index.js",
             "start": "node_modules/cross-env/src/bin/cross-env.js NODE_ENV=production node ./.routhr/index.js",
             "start:windows": "node_modules/cross-env/src/bin/cross-env.js SET NODE_ENV=production && node ./.routhr/index.js",
             "start:linux": "node_modules/cross-env/src/bin/cross-env.js NODE_ENV=production && node ./.routhr/index.js",
