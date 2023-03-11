@@ -47,9 +47,9 @@ export const createPkg = (name: string, description: string) => {
             "dev": "cross-env NODE_ENV=development pm2-dev ./.routhr/",
             "dev:windows": "SET NODE_ENV=development&& pm2-dev ./.routhr/",
             "dev:linux": "NODE_ENV=development&& pm2-dev ./.routhr/index.js",
-            "start": "cross-env NODE_ENV=production node ./.routhr/index.js",
-            "start:windows": "SET NODE_ENV=production&& node ./.routhr/index.js ",
-            "start:linux": "NODE_ENV=production&& node ./.routhr/index.js ",
+            "start": "node_modules/cross-env/src/bin/cross-env.js NODE_ENV=production node ./.routhr/index.js",
+            "start:windows": "node_modules/cross-env/src/bin/cross-env.js SET NODE_ENV=production && node ./.routhr/index.js",
+            "start:linux": "node_modules/cross-env/src/bin/cross-env.js NODE_ENV=production && node ./.routhr/index.js",
             "build": "tsc -p tsconfig.json",
             "watch": "tsc -p tsconfig.json --watch"
         },
