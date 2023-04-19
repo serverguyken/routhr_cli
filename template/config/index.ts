@@ -1,7 +1,10 @@
 import Log from "./Log";
 
 import dontEnv from 'dotenv';
-
+/**
+ * Set environment variables
+ * @returns 
+ */
 function setEnv() {
     if (process.env.NODE_ENV !== 'production') {
         const configFile = `.env.${process.env.NODE_ENV}`.toString();

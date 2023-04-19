@@ -60,8 +60,8 @@ export const createPkg = (name: string, description: string) => {
             routhr: "^1.6.11",
             typescript: "^4.6.3",
             cors: "^2.8.5",
-            pm2: "^5.2.2",
             dotenv: "^16.0.0",
+            "cookie-parser": "^1.4.6"
         },
         devDependencies: {
             "nodemon": "^2.0.20",

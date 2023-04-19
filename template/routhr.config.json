@@ -3,5 +3,5 @@
         "entryFile": ".routhr/index.js",
         "packageManager": "npm"
     },
-    "dependencies": ["routhr", "typescript", "cors", "dotenv"]
+    "dependencies": ["routhr", "typescript", "cors", "dotenv", "cookie-parser"]
 }
