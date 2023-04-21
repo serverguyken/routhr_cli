@@ -60,6 +60,8 @@ export const createPkg = (name: string, description: string) => {
             routhr: "^1.6.11",
             typescript: "^4.6.3",
             cors: "^2.8.5",
+            "@shopascart/collections": "^1.0.41",
+            axios: "^1.3.4",
             dotenv: "^16.0.0",
             "cookie-parser": "^1.4.6"
         },
