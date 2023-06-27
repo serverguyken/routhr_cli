@@ -209,7 +209,7 @@ export const createTemplate = (name: string, dir: string, content: string) => {
 }
 
 export const createProject = (answers: Answers) => {
-    const { name, description, packageManager, git, install } = answers;
+    const { name, description, packageManager, registry, git, install } = answers;
     const currdir = process.cwd();
     const projectDir = path.join(currdir, name);
     const start_time = Date.now();
@@ -243,7 +243,7 @@ export const createProject = (answers: Answers) => {
             task: () => {
                 if (install) {
                     if (packageManager === 'npm') {
-                        return execa('npm install', { cwd: path.join(projectDir) });
+                        return execa(`npm install --registry=${registry}`, { cwd: path.join(projectDir) });
                     } else if (packageManager === 'yarn') {
                         return execa('yarn install', { cwd: path.join(projectDir) });
                     } else {

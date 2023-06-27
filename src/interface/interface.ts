@@ -29,6 +29,7 @@ export interface Answers {
     name: string;
     description: string;
     packageManager: 'npm' | 'yarn';
+    registry: string;
     git: boolean;
     install: boolean;
 }

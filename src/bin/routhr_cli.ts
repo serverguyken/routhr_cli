@@ -84,7 +84,7 @@ const question = [{
     type: 'input',
     name: 'description',
     message: 'What is the description of your project?',
-    default: 'An API server created with routhr',
+    default: 'A routhr application',
 },
 {
     type: 'list',
@@ -107,6 +107,12 @@ const question = [{
 },
 {
     type: 'input',
+    name: 'registry',
+    message: 'Do you want to use a custom registry?',
+    default: 'https://registry.npmjs.org/',
+},
+{
+    type: 'input',
     name: 'git',
     message: 'Do you want to initialize a git repository?',
     default: 'yes',
@@ -124,7 +130,7 @@ const question2 = [
         type: 'input',
         name: 'description',
         message: 'What is the description of your project?',
-        default: 'An API server created with routhr',
+        default: 'A routhr application',
     },
     {
         type: 'list',
@@ -144,6 +150,12 @@ const question2 = [
             }
             return 'Please enter yes or no';
         }
+    },
+    {
+        type: 'input',
+        name: 'registry',
+        message: 'Do you want to use a custom registry?',
+        default: 'https://registry.npmjs.org/'
     },
     {
         type: 'input',
@@ -171,6 +183,7 @@ const init = async () => {
                 description: 'An API server created with routhr',
                 packageManager: 'npm',
                 git: true,
+                registry: 'https://registry.npmjs.org/',
                 install: true
             }
             createProject(answers);
@@ -179,20 +192,22 @@ const init = async () => {
             process.exit(1);
         } else if (options.name.hasValue && !options.default.value && options.name.value !== '') {
             console.log(`Creating a new project with name ${color.yellow(options.name.value)}`);
-            const { name, description, packageManager, git, install } = await inquirer.prompt(question2);
+            const { name, description, packageManager, registry, git, install } = await inquirer.prompt(question2);
             createProject({
                 name: options.name.value,
                 description,
                 packageManager,
+                registry: registry || 'https://registry.npmjs.org/',
                 git: git === 'yes',
                 install: install === 'yes',
             });
         } else {
-            const { name, description, packageManager, git, install } = await inquirer.prompt(question);
+            const { name, description, packageManager, registry, git, install } = await inquirer.prompt(question);
             createProject({
                 name,
                 description,
                 packageManager,
+                registry: registry || 'https://registry.npmjs.org/',
                 git: git === 'yes',
                 install: install === 'yes',
             })
