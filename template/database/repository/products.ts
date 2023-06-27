@@ -12,4 +12,8 @@ export default class ProductsRepository {
         const product = products.find(prod => prod.id === id);
         return product as IProduct;
     }
+
+    async GetAllProducts(): Promise<IProduct[]> {
+        return products;
+    }
 }

@@ -1,6 +1,4 @@
-const ENVCONFIG = () => {
-    return ENVVALUES
-}
+
 
 type TENV = {
     API_VERSION: string;
@@ -18,4 +16,4 @@ declare global {
     }
 }
 
-export default ENVCONFIG;
+export default ENVVALUES;

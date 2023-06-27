@@ -10,4 +10,7 @@ export default class ProductsService {
     async FindProductById(id: string): Promise<IProduct> {
         return this.productsRepository.FindProductById(id);
     }
+    async GetAllProducts(): Promise<IProduct[]> {
+        return this.productsRepository.GetAllProducts();
+    }
 }

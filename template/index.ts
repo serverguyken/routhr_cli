@@ -4,13 +4,20 @@ setEnv();
 const port: any = process.env.PORT || 3002;
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import routes from './api/route';
-const routhr = new Routhr();
-routhr.use(cors());
-routhr.use(routhr.json());
-routhr.use(cookieParser());
-routhr.use(routhr.urlencoded({ extended: true }));
-routhr.useRoutes(routes);
-routhr.start(port, () => {
-    console.log(`Server started on port ${port}`);
-});
+import ProductsController from './controller/product.controller';
+import ENVVALUES from './config/env';
+
+function init() {
+    const app = new Routhr();
+    app.use(cors());
+    app.use(app.json());
+    app.use(cookieParser());
+    app.use(app.urlencoded({ extended: true }));
+    app.setGlobalPrefix(ENVVALUES.API_VERSION);
+    app.useControllers([ProductsController])
+    app.start(port, () => {
+        console.log(`Server started on port ${port}`);
+    });
+}
+
+init();

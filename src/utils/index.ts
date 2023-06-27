@@ -57,10 +57,9 @@ export const createPkg = (name: string, description: string) => {
         author: "",
         license: "ISC",
         dependencies: {
-            routhr: "^1.7.1",
+            routhr: "^1.8.1",
             typescript: "^4.6.3",
             cors: "^2.8.5",
-            "@shopascart/collections": "^1.0.41",
             axios: "^1.3.4",
             dotenv: "^16.0.0",
             "cookie-parser": "^1.4.6"
@@ -84,6 +83,8 @@ export const createTsConfig = (contents?: string) => {
             "outDir": "./.routhr",
             "module": "commonjs", /* Specify what module code is generated. */
             "esModuleInterop": true,
+            "experimentalDecorators": true, /* Enables experimental support for ES7 decorators. */
+            "emitDecoratorMetadata": true, /* Enables experimental support for emitting type metadata for decorators. */
             "forceConsistentCasingInFileNames": true, /* Ensure that casing is correct in imports. */
             /* Type Checking */
             "strict": true, /* Enable all strict type-checking options. */

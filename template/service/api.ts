@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import ENVCONFIG from "../config/env"
+import ENVVALUES from "../config/env"
 
-const API_URL = ENVCONFIG().GATEWAY_API_URL;
+const API_URL = ENVVALUES.GATEWAY_API_URL;
 const newAxios = axios.create({
     baseURL: API_URL,
     withCredentials: true,
