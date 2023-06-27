@@ -8,10 +8,7 @@ import { RouteMiddleware, CreateProductsMiddleware } from "../middleware/product
     middleware: RouteMiddleware
 })
 export default class ProductsController {
-    prefix: string;
-    constructor() {
-        this.prefix = '/test';
-    }
+    constructor() { }
 
     @Get()
     getAllProducts(req: RequestInterface, res: ResponseInterface) {
