@@ -1,6 +1,6 @@
 import { RequestInterface, NextFunctionInterface, ResponseInterface } from "routhr/interface";
 import { Delete, Get, Middleware, Post, Route } from "routhr/decorators";
-import { RouteMiddleware, CreateProductsMiddleware } from "../middleware/app.middleware"
+import { RouteMiddleware, CreateProductsMiddleware } from "../middleware/product.middleware"
 
 
 
