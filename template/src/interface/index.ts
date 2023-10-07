@@ -1,4 +1,4 @@
-import { IProduct } from "@/interface/product"
+import { IProduct } from "../interface/product"
 export {
     IProduct,
 }

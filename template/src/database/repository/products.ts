@@ -1,7 +1,7 @@
 
 
-import { IProduct } from "@/interface";
-import { products } from "@/database/";
+import { IProduct } from "../../interface";
+import { products } from "../../database/";
 
 export default class ProductsRepository {
     async AddProduct(product: IProduct): Promise<IProduct> {

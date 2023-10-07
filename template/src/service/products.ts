@@ -1,6 +1,6 @@
 
-import { ProductsRepository } from "@/database/repository"
-import { IProduct } from "@/interface";
+import { ProductsRepository } from "../database/repository"
+import { IProduct } from "../interface";
 
 export default class ProductsService {
     productsRepository: ProductsRepository;

@@ -3,7 +3,7 @@ import path from 'path';
 import spawn from 'cross-spawn';
 import { exec } from "child_process";
 import { promisify } from "util";
-import { Answers, Config } from '@/interface/interface';
+import { Answers, Config } from '../interface/interface';
 import listr from 'listr';
 export const execa = promisify(exec);
 
@@ -77,10 +77,6 @@ export const createPkg = (name: string, description: string) => {
 export const createTsConfig = (contents?: string) => {
     const tsconfig = {
         "compilerOptions": {
-            "baseUrl": ".",
-            "paths": {
-                "@/*": ["src/*"],
-            },
             /* Language and Environment */
             "target": "es2016", /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
             /* Modules */

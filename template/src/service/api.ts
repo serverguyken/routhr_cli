@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import ENVVALUES from "@/config/env"
+import ENVVALUES from "../config/env"
 
 const API_URL = ENVVALUES.GATEWAY_API_URL;
 const newAxios = axios.create({

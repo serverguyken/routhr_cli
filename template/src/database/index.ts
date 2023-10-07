@@ -2,5 +2,5 @@
 
 
 
-import { products } from "@/database/products";
+import { products } from "../database/products";
 export { products };

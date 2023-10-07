@@ -1,5 +1,5 @@
 import Routhr from 'routhr';
-import { setEnv } from '@/config/';
+import { setEnv } from './src/config';
 setEnv();
 const port: any = process.env.PORT || 3002;
 import cors from 'cors';

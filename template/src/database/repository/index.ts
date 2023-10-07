@@ -1,4 +1,4 @@
-import ProductsRepository from "@/database/repository/products";
+import ProductsRepository from "../../database/repository/products";
 export {
     ProductsRepository,
 }
