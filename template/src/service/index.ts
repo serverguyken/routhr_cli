@@ -1,4 +1,4 @@
-import ProductsService from "./products";
+import ProductsService from "@/service/products";
 const services = {
     ProductsService
 };

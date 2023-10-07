@@ -1,12 +1,12 @@
 import Routhr from 'routhr';
-import { setEnv } from './config';
+import { setEnv } from '@/config/';
 setEnv();
 const port: any = process.env.PORT || 3002;
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import AppController from './controller/app.controller';
-import ProductsController from './controller/product.controller';
-import ENVVALUES from './config/env';
+import AppController from '@/controller/app.controller';
+import ProductsController from '@/controller/product.controller';
+import ENVVALUES from '@/config/env';
 
 function init() {
     const app = new Routhr();
