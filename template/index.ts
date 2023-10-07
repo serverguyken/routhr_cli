@@ -4,9 +4,9 @@ setEnv();
 const port: any = process.env.PORT || 3002;
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import AppController from '@/controller/app.controller';
-import ProductsController from '@/controller/product.controller';
-import ENVVALUES from '@/config/env';
+import AppController from './src/controller/app.controller';
+import ProductsController from './src/controller/product.controller';
+import ENVVALUES from './src/config/env';
 
 function init() {
     const app = new Routhr();
